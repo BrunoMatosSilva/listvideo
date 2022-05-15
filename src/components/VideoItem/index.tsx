@@ -3,38 +3,68 @@ import { AiOutlineClockCircle } from "react-icons/Ai";
 import { BsFillPlayFill } from "react-icons/Bs";
 import { FaTrashAlt } from "react-icons/Fa";
 import { RiAddCircleLine } from "react-icons/ri";
+import { useList } from "../../contexts/ListContext";
+
+export interface IVideo {
+    docId?: string;
+    id: string;
+    title: string;
+    thumbnail: string;
+    duration: string;
+    durationMs: number;
+}
 
 interface VideoProps {
     addMode?: boolean;
+    data: IVideo;
 }
 
-export function VideoItem({ addMode = false }: VideoProps) {
+export function VideoItem({ data, addMode = false }: VideoProps) {
+    const { createListItem, list, deleteListItem } = useList();
+
+    async function addCurrentVideo() {
+        await createListItem(data)
+    }
+
+    async function handleDelete() {
+        if (!data?.docId) return;
+        await deleteListItem(data.docId);
+    }
+
+    function openVideo() {
+        chrome.tabs.create({
+            url: `https://www.youtube.com/watch?v=${data.id}`
+        })
+    }
+
+    const alreadyExists = list.some(video => video.id === data.id);
+
     return (
         <Container>
-            <Thumb imgUrl="https://s1.static.brasilescola.uol.com.br/be/conteudo/images/imagem-em-lente-convexa.jpg" />
+            <Thumb imgUrl={data.thumbnail} />
             <Details>
-                <strong title="Meu titulo meu titulo meu titulo meu titulo">Meu titulo meu titulo meu titulo meu titulo</strong>
+                <strong title={data.title}>{data.title}</strong>
                 <div>
                     <div>
                         {addMode ? (
-                            <Button>
+                            <Button onClick={addCurrentVideo} disabled={alreadyExists}>
                                 <RiAddCircleLine />
                                 Add to list
                             </Button>
                         ) : (
                             <>
-                                <Button>
+                                <Button onClick={openVideo}>
                                     <BsFillPlayFill />
                                     Play now
                                 </Button>
-                                <FaTrashAlt size={12} />
+                                <FaTrashAlt size={12} onClick={handleDelete} />
                             </>
                         )}
 
                     </div>
                     <span>
                         <AiOutlineClockCircle />
-                        15:35
+                        {data.duration}
                     </span>
                 </div>
             </Details>

@@ -6,19 +6,24 @@ import { RoutesComponent } from './routes';
 import { LoadingProvider } from './contexts/LoadingContext';
 import { Loading } from './components/Loading';
 import { AuthProvider } from './contexts/AuthContext';
+import { ListProvider } from './contexts/ListContext';
+import { StyledToaster } from './components/SkyledToasted';
 
 function App() {
   return (
     <Router>
       <LoadingProvider>
         <AuthProvider>
-          <ThemeProvider theme={theme}>
-            <GlobalStyles />
-            <PagesWrapper>
-              <Loading />
-              <RoutesComponent />
-            </PagesWrapper>
-          </ThemeProvider>
+          <ListProvider>
+            <ThemeProvider theme={theme}>
+              <GlobalStyles />
+              <PagesWrapper>
+                <StyledToaster />
+                <Loading />
+                <RoutesComponent />
+              </PagesWrapper>
+            </ThemeProvider>
+          </ListProvider>
         </AuthProvider>
       </LoadingProvider>
     </Router>
