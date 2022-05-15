@@ -1,7 +1,7 @@
 import { lighten } from "polished";
 import styled, { css } from "styled-components";
 
-interface InputContainerProps {
+export interface InputContainerProps {
     isFocused: boolean;
 }
 
@@ -44,6 +44,10 @@ input {
     background: none;
     border: none;
     color: ${({ theme }) => theme.foreground};
+
+    input:-internal-autofill-selected {
+        background: none;
+    }
 
     &::placeholder{
         color: ${({ theme }) => lighten(0.3, theme.currentLine)};

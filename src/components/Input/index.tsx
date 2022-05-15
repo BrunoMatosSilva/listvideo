@@ -1,7 +1,7 @@
 import { InputContainer, InputWrapper, Label } from "./styles";
 import { InputHTMLAttributes, ReactNode, useState } from "react";
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
     label: string;
     icon: ReactNode;
 }
