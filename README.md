@@ -40,8 +40,5 @@
 
 &nbsp;
 
----
-
-<p align="center">Feito com 💙 por <a href="https://www.gbdev.me/">Gabriel Borges</a></p>
 
 
